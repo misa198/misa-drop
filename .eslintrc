@@ -1,0 +1,61 @@
+{
+  "extends": [
+    "next",
+    "next/core-web-vitals",
+    "airbnb-typescript",
+    "plugin:@typescript-eslint/recommended",
+    "plugin:jest/recommended",
+    "plugin:prettier/recommended"
+  ],
+  "plugins": ["react", "@typescript-eslint", "jest", "jsx-a11y"],
+  "env": {
+    "browser": true,
+    "es6": true
+  },
+  "globals": {
+    "Atomics": "readonly",
+    "SharedArrayBuffer": "readonly"
+  },
+  "parser": "@typescript-eslint/parser",
+  "parserOptions": {
+    "ecmaFeatures": {
+      "jsx": true
+    },
+    "ecmaVersion": 2018,
+    "sourceType": "module",
+    "project": "tsconfig.json"
+  },
+  "rules": {
+    "jsx-a11y/click-events-have-key-events": "off",
+    "jsx-a11y/no-static-element-interactions": "off",
+    "jsx-a11y/anchor-is-valid": "off",
+    "@typescript-eslint/dot-notation": "off",
+    "@typescript-eslint/no-explicit-any": "off",
+    "@typescript-eslint/naming-convention": "off",
+    "@typescript-eslint/explicit-module-boundary-types": "off",
+    "import/extensions": "off",
+    "import/first": "off",
+    "import/no-cycle": "off",
+    "no-param-reassign": "off",
+    "no-underscore-dangle": "off",
+    "func-names": "off",
+    "consistent-return": "off",
+    "linebreak-style": "off",
+    "import/prefer-default-export": "off",
+    "react/jsx-no-bind": "off",
+    "react/display-name": "off",
+    "react/react-in-jsx-scope": "off",
+    "react/prop-types": "off",
+    "react/jsx-props-no-spreading": "off",
+    "react/require-default-props": "off",
+    "@next/next/link-passhref": "off",
+    "@next/next/no-img-element": "off",
+    "@next/next/no-sync-scripts": "off",
+    "prettier/prettier": [
+      "error",
+      {
+        "endOfLine": "auto"
+      }
+    ]
+  }
+}
