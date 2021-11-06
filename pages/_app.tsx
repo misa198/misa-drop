@@ -20,7 +20,14 @@ const MyApp: FC<AppProps> = ({ Component, pageProps }) => {
         <div className="w-full flex-grow">
           <Component {...pageProps} />
         </div>
-        <ToastContainer position="top-right" />
+        <ToastContainer
+          position="top-center"
+          limit={1}
+          newestOnTop
+          hideProgressBar
+          draggable
+          autoClose={2000}
+        />
       </div>
       <Background />
     </>

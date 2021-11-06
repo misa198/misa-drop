@@ -19,10 +19,11 @@ const Home: NextPage = () => {
   }, [dispatch]);
 
   useEffect(() => {
-    // if (!user.error) {
-    toast.error(t('app.main.error-ip'));
-    // }
-  }, [t, user.error]);
+    if (user.error) {
+      toast.error(t('app.main.error-ip'));
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [user.error]);
 
   return (
     <>
