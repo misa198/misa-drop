@@ -17,7 +17,7 @@ const MyApp: FC<AppProps> = ({ Component, pageProps }) => {
       <Theme />
       <div className="flex flex-col w-full min-h-screen">
         <Header />
-        <div className="w-full flex-grow">
+        <div className="w-full flex-grow flex">
           <Component {...pageProps} />
         </div>
         <ToastContainer

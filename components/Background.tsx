@@ -8,7 +8,7 @@ const Background: FC = () => {
     style.width = '100%';
     style.position = 'absolute';
     style.zIndex = '-1';
-    style.top = '0';
+    style.bottom = '0';
     style.left = '0';
     const ctx = canvas.getContext('2d') as CanvasRenderingContext2D;
     let x0: number, y0: number, w: number, h: number, dw: number;

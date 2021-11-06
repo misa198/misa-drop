@@ -7,6 +7,7 @@ import { useTranslate } from '../app/hooks/translation';
 import { userActions } from '../app/store/slices/user.slice';
 import { fetchIpToken } from '../app/store/thunks/user.thunk';
 import Footer from '../components/Footer';
+import GuestsList from '../components/GuestsList';
 
 const Home: NextPage = () => {
   const dispatch = useAppDispatch();
@@ -30,7 +31,10 @@ const Home: NextPage = () => {
       <Head>
         <title>Misadrop</title>
       </Head>
-      <Footer />
+      <div className="flex flex-col flex-grow">
+        <GuestsList />
+        <Footer />
+      </div>
     </>
   );
 };

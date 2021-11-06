@@ -8,4 +8,5 @@ body {
   font-family: 'Quicksand', sans-serif;
   overflow-x: hidden;
   position: relative;
+  min-height: 100vh;
 }

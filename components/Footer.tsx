@@ -6,7 +6,7 @@ const Footer: FC = () => {
   const user = useAppSelector((state) => state.user);
 
   return (
-    <div className="w-full absolute left-0 bottom-20 flex flex-col items-center">
+    <div className="w-full flex justify-center" style={{ height: '150px' }}>
       <User name={user.name} color={user.color} />
     </div>
   );
