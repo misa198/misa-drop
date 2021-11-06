@@ -13,8 +13,12 @@ const MyApp: FC<AppProps> = ({ Component, pageProps }) => {
   return (
     <>
       <Theme />
-      <Header />
-      <Component {...pageProps} />
+      <div className="flex flex-col w-full min-h-screen">
+        <Header />
+        <div className="w-full flex-grow">
+          <Component {...pageProps} />
+        </div>
+      </div>
       <Background />
     </>
   );

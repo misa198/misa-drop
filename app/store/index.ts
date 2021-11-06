@@ -9,12 +9,14 @@ import { AppContext } from 'next/app';
 import Router from 'next/router';
 import { Action, AnyAction, combineReducers, Reducer } from 'redux';
 import themeReducer from '../store/slices/theme.slice';
+import userReducer from '../store/slices/user.slice';
 
 const routerMiddleware = createRouterMiddleware();
 
 const rootReducer = combineReducers({
   router: routerReducer,
   theme: themeReducer,
+  user: userReducer,
 });
 
 export type AppState = ReturnType<typeof rootReducer>;
