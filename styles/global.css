@@ -1,0 +1,11 @@
+* {
+  margin: 0;
+  left: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: 'Quicksand', sans-serif;
+  overflow-x: hidden;
+  position: relative;
+}

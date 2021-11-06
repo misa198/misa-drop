@@ -1,11 +1,13 @@
 import { NextPage } from 'next';
-import Background from './components/Background';
+import Head from 'next/head';
 
 const Home: NextPage = () => {
   return (
     <>
-      <div className="w-screen min-h-screen"></div>
-      <Background />
+      <Head>
+        <title>Misadrop</title>
+      </Head>
+      <div className="w-screen"></div>
     </>
   );
 };
