@@ -3,5 +3,7 @@
   "app.header.light-mode": "Light mode",
   "app.header.about": "About us",
   "app.header.vi": "Tiếng Việt",
-  "app.header.en": "English"
+  "app.header.en": "English",
+
+  "app.main.error-ip": "Can not determine your IP"
 }

@@ -1,6 +1,8 @@
 import { AppProps } from 'next/app';
 import dynamic from 'next/dynamic';
 import { FC } from 'react';
+import { ToastContainer } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 import 'tailwindcss/tailwind.css';
 import { wrapper } from '../app/store';
 import Background from '../components/Background';
@@ -18,6 +20,7 @@ const MyApp: FC<AppProps> = ({ Component, pageProps }) => {
         <div className="w-full flex-grow">
           <Component {...pageProps} />
         </div>
+        <ToastContainer position="top-right" />
       </div>
       <Background />
     </>

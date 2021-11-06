@@ -1,13 +1,17 @@
+import dynamic from 'next/dynamic';
 import Image from 'next/image';
 import { useRouter } from 'next/router';
 import { FC } from 'react';
 import { Info, Moon, Sun } from 'react-feather';
-import Tooltip from 'react-tooltip';
 import { useAppDispatch, useAppSelector } from '../app/hooks/redux';
 import { useTranslate } from '../app/hooks/translation';
 import { themeActions } from '../app/store/slices/theme.slice';
 import logoLight from '../public/logo-light.svg';
 import logo from '../public/logo.svg';
+
+const Tooltip = dynamic(() => import('react-tooltip'), {
+  ssr: false,
+});
 
 const Header: FC = () => {
   const { t, locale } = useTranslate();
