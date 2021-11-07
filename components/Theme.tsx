@@ -8,8 +8,8 @@ const Theme: FC = () => {
   useEffect(() => {
     const darkMode = localStorage.getItem('darkMode');
     if (darkMode === null || darkMode === undefined) {
-      localStorage.setItem('darkMode', 'false');
-      dispatch(themeActions.setTheme({ darkMode: false }));
+      localStorage.setItem('darkMode', 'true');
+      dispatch(themeActions.setTheme({ darkMode: true }));
     } else if (darkMode === 'true') {
       dispatch(themeActions.setTheme({ darkMode: true }));
     } else if (darkMode === 'false') {
