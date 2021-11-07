@@ -5,7 +5,7 @@ import next from 'next';
 import requestIp from 'request-ip';
 import { IS_DEV, PORT } from './configs/app';
 import rootRoute from './routes';
-import { client } from './services/redis';
+require('./services/nedb');
 
 const app = next({ dev: IS_DEV });
 const handler = app.getRequestHandler();
@@ -15,17 +15,15 @@ export const httpServer = http.createServer(server);
 server.use(requestIp.mw());
 server.use(express.json());
 
-export const bootstrap = () => {
-  client.on('connect', async () => {
-    log.info('> Redis connected');
-    await app.prepare();
+export const bootstrap = async () => {
+  log.info('> Redis connected');
+  await app.prepare();
 
-    server.use('/api/', rootRoute);
+  server.use('/api/', rootRoute);
 
-    server.all('*', (req: Request, res: Response) => handler(req, res));
+  server.all('*', (req: Request, res: Response) => handler(req, res));
 
-    httpServer.listen(PORT, () => {
-      log.info(`> Ready on http://localhost:${PORT}`);
-    });
+  httpServer.listen(PORT, () => {
+    log.info(`> Ready on http://localhost:${PORT}`);
   });
 };
