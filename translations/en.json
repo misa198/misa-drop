@@ -8,6 +8,19 @@
   "app.main.no-peer": "Open Misadrop on other devices to send files",
 
   "app.main.error-ip": "Can not determine your IP",
+  "app.main.error-transfer": "Invalid file or receiver does not exist",
+  "app.main.error-file": "Invalid file",
+
+  "app.modal.file-name": "File name",
+  "app.modal.file-size": "File size",
+  "app.modal.from": "From",
+  "app.modal.to": "To",
+  "app.modal.pending": "Pending",
+  "app.modal.cancel": "Cancel",
+  "app.modal.accept": "Accept",
+  "app.modal.deny": "Deny",
+  "app.modal.canceled": "Canceled",
+
   "app.modal.description-title": "What is it?",
   "app.modal.security-title": "Security",
   "app.modal.description": "Misadrop is a free web app that allows you to easily and securely share files directly between devices without uploading them to any server first.",

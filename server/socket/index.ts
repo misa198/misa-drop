@@ -31,6 +31,44 @@ io.on('connection', (socket: Socket) => {
     }
   });
 
+  socket.on('request-send-data', async (payload: any) => {
+    try {
+      const authUser = authSocket(socket);
+      if (!authUser) return socket.emit('error', 'Unauthorized');
+      socket.to(payload.to).emit('request-send-data', payload);
+    } catch (e) {
+      socket.emit('error', e);
+    }
+  });
+
+  socket.on(
+    'deny-receive-data',
+    async (payload: { from: string; to: string }) => {
+      try {
+        const authUser = authSocket(socket);
+        if (!authUser) return socket.emit('error', 'Unauthorized');
+        socket.to(payload.from).emit('deny-receive-data');
+      } catch (e) {
+        socket.emit('error', e);
+      }
+    },
+  );
+
+  socket.on(
+    'cancel-transferring',
+    async (payload: { from: string; to: string }) => {
+      try {
+        const authUser = authSocket(socket);
+        if (!authUser) return socket.emit('error', 'Unauthorized');
+        socket
+          .to(socket.id === payload.to ? payload.from : payload.to)
+          .emit('cancel-transferring');
+      } catch (e) {
+        socket.emit('error', e);
+      }
+    },
+  );
+
   socket.on('disconnect', async () => {
     try {
       const authUser = authSocket(socket);

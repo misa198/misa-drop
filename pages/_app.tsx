@@ -10,6 +10,7 @@ import Background from '../components/Background';
 import Header from '../components/Header';
 import '../styles/global.css';
 
+const Peer = dynamic(() => import('../components/Peer'), { ssr: false });
 const Theme = dynamic(() => import('../components/Theme'), { ssr: false });
 
 const MyApp: FC<AppProps> = ({ Component, pageProps }) => {
@@ -17,6 +18,7 @@ const MyApp: FC<AppProps> = ({ Component, pageProps }) => {
 
   return (
     <>
+      <Peer />
       <Theme />
       <div className="flex flex-col w-full min-h-screen">
         <Header />
