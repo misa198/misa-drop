@@ -10,10 +10,12 @@ import { userActions } from '../app/store/slices/user.slice';
 import { fetchIpToken } from '../app/store/thunks/user.thunk';
 import Footer from '../components/Footer';
 import Modal from '../components/Modal';
-import TransferModal from '../components/TransferModal';
 import { Room, User } from '../models/Room';
 
 const GuestsList = dynamic(() => import('../components/GuestsList'), {
+  ssr: false,
+});
+const TransferModal = dynamic(() => import('../components/TransferModal'), {
   ssr: false,
 });
 

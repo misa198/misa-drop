@@ -94,25 +94,23 @@ const PeerCom: FC = () => {
   }, [dispatch, peer, socket, transfer.fileContent, transfer.to]);
 
   // Receive file
-  useEffect(() => {
-    if (transfer.status === 'transferring' && !transfer.fileContent) {
-      peer?.on('connection', (conn) => {
-        conn.on('data', (data: string) => {
-          dispatch(transferActions.addNewPath(data));
-        });
+  useEffect((): any => {
+    peer?.on('connection', (conn) => {
+      conn.on('data', (data: string) => {
+        dispatch(transferActions.addNewPath(data));
       });
-    }
-  }, [dispatch, peer, transfer.fileContent, transfer.status]);
+    });
+  }, [dispatch, peer]);
 
   useEffect(() => {
-    if (transfer.paths?.length === transfer.numberOfPaths && transfer.paths) {
+    if (transfer.paths?.length === transfer.numberOfPaths && transfer.status) {
       dispatch(transferActions.setTransferStatus('completed'));
     }
   }, [
     dispatch,
     transfer.numberOfPaths,
-    transfer.paths,
     transfer.paths?.length,
+    transfer.status,
   ]);
 
   return null;

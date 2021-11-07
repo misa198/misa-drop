@@ -7,17 +7,24 @@ type TransferStatus =
   | 'completed'
   | 'canceled';
 interface TransferState {
-  numberOfPaths?: number;
-  paths?: string[];
-  from?: string;
-  to?: string;
-  fileSize?: string;
-  fileName?: string;
+  numberOfPaths: number;
+  paths: string[];
+  from: string;
+  to: string;
+  fileSize: string;
+  fileName: string;
   status?: TransferStatus;
   fileContent?: string;
 }
 
-const initialState: TransferState = {};
+const initialState: TransferState = {
+  numberOfPaths: 0,
+  paths: [],
+  from: '',
+  to: '',
+  fileSize: '',
+  fileName: '',
+};
 
 const transferSlide = createSlice({
   name: 'transfer',
@@ -47,18 +54,16 @@ const transferSlide = createSlice({
       state.status = 'pending';
     },
     addNewPath: (state, action: PayloadAction<string>) => {
-      state.paths = state.paths
-        ? [...state.paths, action.payload]
-        : [action.payload];
+      state.paths.push(action.payload);
     },
     resetTransferState: (state) => {
-      state.numberOfPaths = undefined;
-      state.paths = undefined;
-      state.from = undefined;
-      state.to = undefined;
-      state.fileSize = undefined;
+      state.numberOfPaths = 0;
+      state.paths = [];
+      state.from = '';
+      state.to = '';
+      state.fileSize = '';
+      state.fileName = '';
       state.status = undefined;
-      state.fileName = undefined;
       state.fileContent = undefined;
     },
   },

@@ -22,6 +22,7 @@ const Guest: FC<GuestProps> = ({ user }) => {
 
   function onClickGuest() {
     if (inputFileRef.current) {
+      inputFileRef.current.value = '';
       inputFileRef.current.click();
     }
   }

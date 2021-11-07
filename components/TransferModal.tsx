@@ -57,14 +57,17 @@ const Modal: FC = () => {
   }
 
   useEffect(() => {
-    if (transferState.status === 'completed' && saveButtonRef.current) {
+    if (
+      transferState.status === 'completed' &&
+      saveButtonRef.current &&
+      transferState.paths.length > 0
+    ) {
       const fileContent = transferState.paths?.join('') as string;
-      saveButtonRef.current.href = URL.createObjectURL(new Blob([fileContent]));
+      saveButtonRef.current.href = fileContent;
       saveButtonRef.current.target = '_self';
       saveButtonRef.current.download = transferState.fileName as string;
     }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [transferState.status]);
+  }, [transferState.fileName, transferState.paths, transferState.status]);
 
   return (
     <div
@@ -101,13 +104,18 @@ const Modal: FC = () => {
           {(transferState.status === 'transferring' ||
             transferState.status === 'completed') && (
             <div className="mb-4">
+              {Math.round(
+                ((transferState.paths?.length || 0) /
+                  (transferState.numberOfPaths || 1)) *
+                  100,
+              )}
+              %
               <Line
-                percent={
-                  Math.round(
-                    (transferState.paths?.length || 0) /
-                      (transferState.numberOfPaths || 1),
-                  ) * 100
-                }
+                percent={Math.round(
+                  ((transferState.paths?.length || 0) /
+                    (transferState.numberOfPaths || 1)) *
+                    100,
+                )}
               />
             </div>
           )}
@@ -150,10 +158,8 @@ const Modal: FC = () => {
           )}
           {transferState.status === 'completed' && !transferState.fileContent && (
             <div className="flex justify-center">
-              <a ref={saveButtonRef}>
-                <Button variant="success" onClick={onCloseModal}>
-                  {t('app.modal.save')}
-                </Button>
+              <a ref={saveButtonRef} onClick={onCloseModal}>
+                <Button variant="success">{t('app.modal.save')}</Button>
               </a>
             </div>
           )}
