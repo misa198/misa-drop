@@ -10,7 +10,12 @@ interface UserProps {
 
 const User: FC<UserProps> = ({ name, color }) => {
   return (
-    <div className="relative w-28 h-32">
+    <div
+      className="relative w-28 h-32"
+      style={{
+        animation: 'fadeIn 300ms',
+      }}
+    >
       <div className="pointer-events-none w-full flex justify-center">
         <Animal name={name} color={color} />
       </div>
