@@ -1,21 +1,24 @@
+import { useTheme } from 'next-themes';
 import { FC, useEffect } from 'react';
-import { useAppDispatch } from '../app/hooks/redux';
-import { themeActions } from '../app/store/slices/theme.slice';
 
 const Theme: FC = () => {
-  const dispatch = useAppDispatch();
+  const { theme, setTheme } = useTheme();
 
   useEffect(() => {
     const darkMode = localStorage.getItem('darkMode');
     if (darkMode === null || darkMode === undefined) {
       localStorage.setItem('darkMode', 'true');
-      dispatch(themeActions.setTheme({ darkMode: true }));
+      setTheme('dark');
     } else if (darkMode === 'true') {
-      dispatch(themeActions.setTheme({ darkMode: true }));
+      setTheme('dark');
     } else if (darkMode === 'false') {
-      dispatch(themeActions.setTheme({ darkMode: false }));
+      setTheme('light');
     }
-  }, [dispatch]);
+  }, [setTheme]);
+
+  useEffect(() => {
+    localStorage.setItem('darkMode', theme === 'dark' ? 'true' : 'false');
+  }, [theme]);
 
   return null;
 };

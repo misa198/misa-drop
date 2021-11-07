@@ -1,12 +1,12 @@
+import { useTheme } from 'next-themes';
 import dynamic from 'next/dynamic';
 import Image from 'next/image';
 import { useRouter } from 'next/router';
 import { FC } from 'react';
 import { Info, Moon, Sun } from 'react-feather';
-import { useAppDispatch, useAppSelector } from '../app/hooks/redux';
+import { useAppDispatch } from '../app/hooks/redux';
 import { useTranslate } from '../app/hooks/translation';
 import { layoutActions } from '../app/store/slices/layout.slice';
-import { themeActions } from '../app/store/slices/theme.slice';
 import logoLight from '../public/logo-light.svg';
 import logo from '../public/logo.svg';
 
@@ -19,16 +19,15 @@ const Header: FC = () => {
   const router = useRouter();
   const { pathname, query, asPath } = router;
   const dispatch = useAppDispatch();
-  const darkMode = useAppSelector((state) => state.theme.darkMode);
   const otherLocale = locale === 'en' ? 'vi' : 'en';
+  const { theme, setTheme } = useTheme();
 
   function onSwitchModal() {
     dispatch(layoutActions.switchModal());
   }
 
   function onChangeTheme() {
-    dispatch(themeActions.setTheme({ darkMode: !darkMode }));
-    localStorage.setItem('darkMode', JSON.stringify(!darkMode));
+    setTheme(theme === 'light' ? 'dark' : 'light');
   }
 
   function onChangeLocale() {
@@ -37,10 +36,11 @@ const Header: FC = () => {
 
   const navLinks = [
     {
-      Icon: darkMode ? Sun : Moon,
-      tooltip: darkMode
-        ? t('app.header.light-mode')
-        : t('app.header.dark-mode'),
+      Icon: theme === 'dark' ? Sun : Moon,
+      tooltip:
+        theme === 'dark'
+          ? t('app.header.light-mode')
+          : t('app.header.dark-mode'),
       onClick: onChangeTheme,
     },
     {
@@ -53,7 +53,7 @@ const Header: FC = () => {
   return (
     <header className="p-4 flex justify-between items-center">
       <Image
-        src={darkMode ? logoLight : logo}
+        src={theme === 'dark' ? logoLight : logo}
         width={153}
         height={50}
         alt="logo"

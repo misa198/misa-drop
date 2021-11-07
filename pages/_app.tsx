@@ -1,3 +1,4 @@
+import { ThemeProvider } from 'next-themes';
 import { AppProps } from 'next/app';
 import dynamic from 'next/dynamic';
 import { FC } from 'react';
@@ -17,7 +18,7 @@ const MyApp: FC<AppProps> = ({ Component, pageProps }) => {
   useInitSocket();
 
   return (
-    <>
+    <ThemeProvider attribute="class">
       <Peer />
       <Theme />
       <div className="flex flex-col w-full min-h-screen">
@@ -35,7 +36,7 @@ const MyApp: FC<AppProps> = ({ Component, pageProps }) => {
         />
       </div>
       <Background />
-    </>
+    </ThemeProvider>
   );
 };
 export default wrapper.withRedux(MyApp);

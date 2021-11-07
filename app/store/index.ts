@@ -8,7 +8,6 @@ import { createWrapper, HYDRATE, MakeStore } from 'next-redux-wrapper';
 import { AppContext } from 'next/app';
 import Router from 'next/router';
 import { Action, AnyAction, combineReducers, Reducer } from 'redux';
-import themeReducer from '../store/slices/theme.slice';
 import userReducer from '../store/slices/user.slice';
 import layoutReducer from './slices/layout.slice';
 import transferReducer from './slices/transfer.slice';
@@ -17,7 +16,6 @@ const routerMiddleware = createRouterMiddleware();
 
 const rootReducer = combineReducers({
   router: routerReducer,
-  theme: themeReducer,
   user: userReducer,
   layout: layoutReducer,
   transfer: transferReducer,

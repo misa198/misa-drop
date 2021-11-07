@@ -1,4 +1,5 @@
 import classnames from 'classnames';
+import { useTheme } from 'next-themes';
 import dynamic from 'next/dynamic';
 import Image from 'next/image';
 import Link from 'next/link';
@@ -17,8 +18,8 @@ const Tooltip = dynamic(() => import('react-tooltip'), {
 const Modal: FC = () => {
   const { t } = useTranslate();
   const isOpened = useAppSelector((state) => state.layout.isModalOpened);
-  const darkMode = useAppSelector((state) => state.theme.darkMode);
   const dispatch = useAppDispatch();
+  const { theme } = useTheme();
 
   function onSwitchModal() {
     dispatch(layoutActions.switchModal());
@@ -42,7 +43,7 @@ const Modal: FC = () => {
           </div>
           <div className="flex justify-center mb-8">
             <Image
-              src={darkMode ? logoLight : logo}
+              src={theme === 'dark' ? logoLight : logo}
               width={230}
               height={75}
               alt="logo"
