@@ -18,6 +18,7 @@ const Tooltip = dynamic(() => import('react-tooltip'), {
 const Modal: FC = () => {
   const { t } = useTranslate();
   const isOpened = useAppSelector((state) => state.layout.isModalOpened);
+  const transferState = useAppSelector((state) => state.transfer);
   const dispatch = useAppDispatch();
   const { theme } = useTheme();
 
@@ -30,7 +31,7 @@ const Modal: FC = () => {
       className={classnames(
         'fixed top-0 left-0 w-screen h-screen bg-gray-600 bg-opacity-80 flex justify-center items-center transition-all duration-300',
         {
-          'opacity-0 invisible': !isOpened,
+          'opacity-0 invisible': !isOpened || transferState.status,
         },
       )}
     >
