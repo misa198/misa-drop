@@ -1,6 +1,6 @@
 import classnames from 'classnames';
 import { Line } from 'rc-progress';
-import { FC, useEffect, useMemo, useRef } from 'react';
+import { FC, useEffect, useMemo } from 'react';
 import { X } from 'react-feather';
 import { useAppDispatch, useAppSelector } from '../app/hooks/redux';
 import { useSocket } from '../app/hooks/socket';
@@ -9,7 +9,6 @@ import { transferActions } from '../app/store/slices/transfer.slice';
 import Button from './Button';
 
 const Modal: FC = () => {
-  const saveButtonRef = useRef<HTMLAnchorElement>(null);
   const { t } = useTranslate();
   const transferState = useAppSelector((state) => state.transfer);
   const user = useAppSelector((state) => state.user);
@@ -59,15 +58,23 @@ const Modal: FC = () => {
   useEffect(() => {
     if (
       transferState.status === 'completed' &&
-      saveButtonRef.current &&
-      transferState.paths.length > 0
+      transferState.paths.length > 0 &&
+      !transferState.fileContent
     ) {
+      const save = document.createElement('a');
       const fileContent = transferState.paths?.join('') as string;
-      saveButtonRef.current.href = fileContent;
-      saveButtonRef.current.target = '_self';
-      saveButtonRef.current.download = transferState.fileName as string;
+      save.href = fileContent;
+      save.target = '_self';
+      save.download = transferState.fileName as string;
+      save.click();
+      save.remove();
     }
-  }, [transferState.fileName, transferState.paths, transferState.status]);
+  }, [
+    transferState.fileContent,
+    transferState.fileName,
+    transferState.paths,
+    transferState.status,
+  ]);
 
   return (
     <div
@@ -151,16 +158,9 @@ const Modal: FC = () => {
               <Button variant="error">{t('app.modal.canceled')}</Button>
             </div>
           )}
-          {transferState.status === 'completed' && transferState.fileContent && (
+          {transferState.status === 'completed' && (
             <div className="flex justify-center">
               <Button variant="success">{t('app.modal.completed')}</Button>
-            </div>
-          )}
-          {transferState.status === 'completed' && !transferState.fileContent && (
-            <div className="flex justify-center">
-              <a ref={saveButtonRef} onClick={onCloseModal}>
-                <Button variant="success">{t('app.modal.save')}</Button>
-              </a>
             </div>
           )}
           {transferState.status === 'denied' && (
