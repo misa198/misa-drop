@@ -5,5 +5,9 @@
   "app.header.vi": "Tiếng Việt",
   "app.header.en": "English",
 
-  "app.main.error-ip": "Can not determine your IP"
+  "app.main.error-ip": "Can not determine your IP",
+  "app.modal.description-title": "What is it?",
+  "app.modal.security-title": "Security",
+  "app.modal.description": "Misadrop is a free web app that allows you to easily and securely share files directly between devices without uploading them to any server first.",
+  "app.modal.security": "We do not store any data. Your data will be transmitted directly over the P2P connection."
 }

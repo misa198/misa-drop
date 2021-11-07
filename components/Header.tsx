@@ -5,6 +5,7 @@ import { FC } from 'react';
 import { Info, Moon, Sun } from 'react-feather';
 import { useAppDispatch, useAppSelector } from '../app/hooks/redux';
 import { useTranslate } from '../app/hooks/translation';
+import { layoutActions } from '../app/store/slices/layout.slice';
 import { themeActions } from '../app/store/slices/theme.slice';
 import logoLight from '../public/logo-light.svg';
 import logo from '../public/logo.svg';
@@ -20,6 +21,10 @@ const Header: FC = () => {
   const dispatch = useAppDispatch();
   const darkMode = useAppSelector((state) => state.theme.darkMode);
   const otherLocale = locale === 'en' ? 'vi' : 'en';
+
+  function onSwitchModal() {
+    dispatch(layoutActions.switchModal());
+  }
 
   function onChangeTheme() {
     dispatch(themeActions.setTheme({ darkMode: !darkMode }));
@@ -41,6 +46,7 @@ const Header: FC = () => {
     {
       Icon: Info,
       tooltip: t('app.header.about'),
+      onClick: onSwitchModal,
     },
   ];
 
