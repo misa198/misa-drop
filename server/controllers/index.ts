@@ -1,9 +1,8 @@
 import { Request, Response } from 'express';
-import jwt from 'jsonwebtoken';
-import { JWT_EXPIRES_IN, JWT_SECRET } from '../configs/app';
+import { signToken } from '../services/jwt';
 
 export const getToken = (req: Request, res: Response) => {
-  const ip = req.clientIp;
-  const token = jwt.sign({ ip }, JWT_SECRET, { expiresIn: JWT_EXPIRES_IN });
+  const ip = req.clientIp as string;
+  const token = signToken(ip);
   return res.json({ token });
 };

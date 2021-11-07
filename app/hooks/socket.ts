@@ -7,6 +7,7 @@ let initialSocket: Socket | null = null;
 export const useInitSocket = (): void => {
   const user = useAppSelector((state) => state.user);
   const [socket, setSocket] = useState<Socket | null>(null);
+  initialSocket = socket;
 
   useEffect(() => {
     if (user.token) {
@@ -22,23 +23,6 @@ export const useInitSocket = (): void => {
       setSocket(null);
     }
   }, [user.token]);
-
-  useEffect((): any => {
-    socket?.on('connect', () => {
-      initialSocket = socket;
-    });
-
-    return () => socket?.off('connect');
-  }, [socket]);
-
-  useEffect((): any => {
-    socket?.on('disconnected', () => {
-      console.log('connected');
-      initialSocket = null;
-    });
-
-    return () => socket?.off('disconnected');
-  }, [socket]);
 };
 
 export const useSocket = () => {

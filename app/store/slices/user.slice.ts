@@ -1,4 +1,5 @@
-import { createSlice } from '@reduxjs/toolkit';
+import { createSlice, PayloadAction } from '@reduxjs/toolkit';
+import { Room, User } from '../../../models/Room';
 import { getRandomAnimal } from '../../../utils/animals';
 import { fetchIpToken } from '../thunks/user.thunk';
 
@@ -7,6 +8,7 @@ interface UserState {
   color: string;
   token: string;
   error: boolean;
+  guests: User[];
 }
 
 const initialState: UserState = {
@@ -14,6 +16,7 @@ const initialState: UserState = {
   color: '',
   token: '',
   error: false,
+  guests: [],
 };
 
 const userSlice = createSlice({
@@ -24,6 +27,20 @@ const userSlice = createSlice({
       const { name, color } = getRandomAnimal();
       state.name = name;
       state.color = color;
+    },
+    setGuests(state, action: PayloadAction<Room>) {
+      const users = action.payload.users;
+      const guests = users.filter((user) => user.id !== state.token);
+      state.guests = guests;
+    },
+    addGuest(state, action: PayloadAction<User>) {
+      state.guests.push(action.payload);
+    },
+    removeGuest(state, action: PayloadAction<string>) {
+      const guests = state.guests.filter(
+        (guest) => guest.id !== action.payload,
+      );
+      state.guests = guests;
     },
   },
   extraReducers: (builder) => {
