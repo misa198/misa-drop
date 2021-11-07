@@ -1,34 +1,29 @@
-This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+<p align="center">
+  <img src="./docs/images/logo.png" align="center" />
+</p>
 
-## Getting Started
+## Overview
 
-First, run the development server:
+Misadrop is a free web app that allows you to easily and securely share files directly between devices without uploading them to any server first.
 
-```bash
-npm run dev
-# or
-yarn dev
-```
+## Security
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+Misadrop doesn't store any data. Your data will be transmitted directly over the P2P connection.
 
-You can start editing the page by modifying `pages/index.tsx`. The page auto-updates as you edit the file.
+## How it work?
 
-[API routes](https://nextjs.org/docs/api-routes/introduction) can be accessed on [http://localhost:3000/api/hello](http://localhost:3000/api/hello). This endpoint can be edited in `pages/api/hello.ts`.
+Misadrop identifies devices in the same network by public IP addresses. The files will be transferred over a [P2P](https://developer.mozilla.org/en-US/docs/Glossary/P2P) connection using [WebRTC](https://developer.mozilla.org/en-US/docs/Web/API/WebRTC_API).
 
-The `pages/api` directory is mapped to `/api/*`. Files in this directory are treated as [API routes](https://nextjs.org/docs/api-routes/introduction) instead of React pages.
+## Supported browsers
 
-## Learn More
+- Chromium based
+- Firefox
+- Safari 13+
 
-To learn more about Next.js, take a look at the following resources:
+## License
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+[MIT](./LICENSE)
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js/) - your feedback and contributions are welcome!
+## Demo
 
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
+[![](https://img.shields.io/badge/Website-Heroku-blueviolet)](https://misadrop.herokuapp.com/)
