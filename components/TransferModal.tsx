@@ -42,6 +42,14 @@ const Modal: FC = () => {
     dispatch(transferActions.resetTransferState());
   }
 
+  function acceptTransfer() {
+    socket?.emit('accept-transfer', {
+      from: transferState.from,
+      to: transferState.to,
+    });
+    dispatch(transferActions.setTransferStatus('transferring'));
+  }
+
   return (
     <div
       className={classnames(
@@ -74,19 +82,19 @@ const Modal: FC = () => {
             <span className="font-bold">{t('app.modal.file-size')}: </span>
             <span className="capitalize">{transferState.fileSize}</span>
           </div>
-          {transferState.status === 'transferring' ||
-            (transferState.status === 'completed' && (
-              <div className="mb-4">
-                <Line
-                  percent={
-                    Math.round(
-                      (transferState.paths?.length ?? 0) /
-                        (transferState.numberOfPaths ?? 1),
-                    ) * 100
-                  }
-                />
-              </div>
-            ))}
+          {(transferState.status === 'transferring' ||
+            transferState.status === 'completed') && (
+            <div className="mb-4">
+              <Line
+                percent={
+                  Math.round(
+                    (transferState.paths?.length ?? 0) /
+                      (transferState.numberOfPaths ?? 1),
+                  ) * 100
+                }
+              />
+            </div>
+          )}
           <div className="flex justify-end">
             {transferState.fileContent && transferState.status === 'pending' && (
               <>
@@ -101,12 +109,14 @@ const Modal: FC = () => {
                 <Button variant="error" className="mr-2" onClick={onCloseModal}>
                   {t('app.modal.deny')}
                 </Button>
-                <Button variant="success">{t('app.modal.accept')}</Button>
+                <Button variant="success" onClick={acceptTransfer}>
+                  {t('app.modal.accept')}
+                </Button>
               </>
             )}
             {transferState.status === 'transferring' && (
               <>
-                <Button variant="error" className="mr-2">
+                <Button onClick={onCloseModal} variant="error">
                   {t('app.modal.cancel')}
                 </Button>
               </>
@@ -115,6 +125,16 @@ const Modal: FC = () => {
           {transferState.status === 'canceled' && (
             <div className="flex justify-center">
               <Button variant="error">{t('app.modal.canceled')}</Button>
+            </div>
+          )}
+          {transferState.status === 'completed' && transferState.fileContent && (
+            <div className="flex justify-center">
+              <Button variant="success">{t('app.modal.completed')}</Button>
+            </div>
+          )}
+          {transferState.status === 'completed' && !transferState.fileContent && (
+            <div className="flex justify-center">
+              <Button variant="success">{t('app.modal.save')}</Button>
             </div>
           )}
         </div>

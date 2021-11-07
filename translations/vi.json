@@ -20,6 +20,8 @@
   "app.modal.accept": "Đồng ý",
   "app.modal.deny": "Từ chối",
   "app.modal.canceled": "Đã bị huỷ",
+  "app.modal.completed": "Đã hoàn thành",
+  "app.modal.save": "Lưu",
 
   "app.modal.description-title": "Đây là gì?",
   "app.modal.security-title": "Bảo mật",

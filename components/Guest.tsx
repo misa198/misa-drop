@@ -1,14 +1,11 @@
-import Peer from 'peerjs';
 import prettyBytes from 'pretty-bytes';
 import { FC, useRef } from 'react';
 import { toast } from 'react-toastify';
-import { usePeer } from '../app/hooks/peer';
 import { useAppDispatch } from '../app/hooks/redux';
 import { useSocket } from '../app/hooks/socket';
 import { useTranslate } from '../app/hooks/translation';
 import { transferActions } from '../app/store/slices/transfer.slice';
 import { CHUNK_LENGTH } from '../constants/file';
-import { FileChunk } from '../models/FileChunk';
 import { User as UserModal } from '../models/Room';
 import User from './User';
 
@@ -26,26 +23,6 @@ const Guest: FC<GuestProps> = ({ user }) => {
   function onClickGuest() {
     if (inputFileRef.current) {
       inputFileRef.current.click();
-    }
-  }
-
-  function onChunkFile(remainData: string, conn: Peer.DataConnection) {
-    let data: FileChunk;
-    if (remainData.length > CHUNK_LENGTH) {
-      data = {
-        message: remainData.slice(0, CHUNK_LENGTH),
-        last: false,
-      };
-      conn.send(JSON.stringify(data));
-      setTimeout(() => {
-        onChunkFile(remainData.slice(CHUNK_LENGTH), conn);
-      }, 500);
-    } else {
-      data = {
-        message: remainData,
-        last: true,
-      };
-      conn.send(JSON.stringify(data));
     }
   }
 
@@ -68,14 +45,6 @@ const Guest: FC<GuestProps> = ({ user }) => {
           };
           socket?.emit('request-send-data', payload);
           dispatch(transferActions.setNewRequest(payload));
-          //   const conn = peer?.connect(`${APP_NAME}-${id}`);
-          //   if (conn) {
-          //     conn.on('open', () => {
-          //       onChunkFile(_result, conn);
-          //     });
-          //   }
-          // } else {
-          //   toast.error(t('app.main.error-transfer'));
         } else {
           toast.error(t('app.main.error-file'));
         }

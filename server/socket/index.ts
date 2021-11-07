@@ -69,6 +69,19 @@ io.on('connection', (socket: Socket) => {
     },
   );
 
+  socket.on(
+    'accept-transfer',
+    async (payload: { from: string; to: string }) => {
+      try {
+        const authUser = authSocket(socket);
+        if (!authUser) return socket.emit('error', 'Unauthorized');
+        socket.to(payload.from).emit('accept-transfer');
+      } catch (e) {
+        socket.emit('error', e);
+      }
+    },
+  );
+
   socket.on('disconnect', async () => {
     try {
       const authUser = authSocket(socket);

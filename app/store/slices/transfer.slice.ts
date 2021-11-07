@@ -46,6 +46,11 @@ const transferSlide = createSlice({
       state.to = action.payload.to;
       state.status = 'pending';
     },
+    addNewPath: (state, action: PayloadAction<string>) => {
+      state.paths = state.paths
+        ? [...state.paths, action.payload]
+        : [action.payload];
+    },
     resetTransferState: (state) => {
       state.numberOfPaths = undefined;
       state.paths = undefined;

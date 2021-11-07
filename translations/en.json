@@ -20,6 +20,8 @@
   "app.modal.accept": "Accept",
   "app.modal.deny": "Deny",
   "app.modal.canceled": "Canceled",
+  "app.modal.completed": "Completed",
+  "app.modal.save": "Save",
 
   "app.modal.description-title": "What is it?",
   "app.modal.security-title": "Security",
