@@ -1,4 +1,5 @@
 import { NextPage } from 'next';
+import dynamic from 'next/dynamic';
 import Head from 'next/head';
 import { useEffect } from 'react';
 import { toast } from 'react-toastify';
@@ -7,7 +8,10 @@ import { useTranslate } from '../app/hooks/translation';
 import { userActions } from '../app/store/slices/user.slice';
 import { fetchIpToken } from '../app/store/thunks/user.thunk';
 import Footer from '../components/Footer';
-import GuestsList from '../components/GuestsList';
+
+const GuestsList = dynamic(() => import('../components/GuestsList'), {
+  ssr: false,
+});
 
 const Home: NextPage = () => {
   const dispatch = useAppDispatch();

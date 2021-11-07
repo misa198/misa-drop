@@ -16,7 +16,7 @@ server.use(requestIp.mw());
 server.use(express.json());
 
 export const bootstrap = async () => {
-  log.info('> Redis connected');
+  require('./socket');
   await app.prepare();
 
   server.use('/api/', rootRoute);
