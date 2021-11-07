@@ -1,6 +1,6 @@
 import classnames from 'classnames';
 import { Line } from 'rc-progress';
-import { FC, useMemo } from 'react';
+import { FC, useEffect, useMemo, useRef } from 'react';
 import { X } from 'react-feather';
 import { useAppDispatch, useAppSelector } from '../app/hooks/redux';
 import { useSocket } from '../app/hooks/socket';
@@ -9,6 +9,7 @@ import { transferActions } from '../app/store/slices/transfer.slice';
 import Button from './Button';
 
 const Modal: FC = () => {
+  const saveButtonRef = useRef<HTMLAnchorElement>(null);
   const { t } = useTranslate();
   const transferState = useAppSelector((state) => state.transfer);
   const user = useAppSelector((state) => state.user);
@@ -35,11 +36,16 @@ const Modal: FC = () => {
 
   function onCloseModal() {
     dispatch(transferActions.resetTransferState());
-    socket?.emit('cancel-transferring', {
-      from: transferState.from,
-      to: transferState.to,
-    });
-    dispatch(transferActions.resetTransferState());
+    if (
+      transferState.status !== 'denied' &&
+      transferState.status !== 'completed'
+    ) {
+      socket?.emit('cancel-transferring', {
+        from: transferState.from,
+        to: transferState.to,
+      });
+      dispatch(transferActions.resetTransferState());
+    }
   }
 
   function acceptTransfer() {
@@ -50,34 +56,15 @@ const Modal: FC = () => {
     dispatch(transferActions.setTransferStatus('transferring'));
   }
 
-  function onSaveFile() {
-    const fileContent = transferState.paths?.join('') as string;
-    const save = document.createElement('a');
-    save.href = fileContent;
-    save.target = '_blank';
-    save.download = transferState.fileName as string;
-
-    const evt = document.createEvent('MouseEvents');
-    evt.initMouseEvent(
-      'click',
-      true,
-      true,
-      window,
-      1,
-      0,
-      0,
-      0,
-      0,
-      false,
-      false,
-      false,
-      false,
-      0,
-      null,
-    );
-    save.dispatchEvent(evt);
-    (window.URL || window.webkitURL).revokeObjectURL(save.href);
-  }
+  useEffect(() => {
+    if (transferState.status === 'completed' && saveButtonRef.current) {
+      const fileContent = transferState.paths?.join('') as string;
+      saveButtonRef.current.href = URL.createObjectURL(new Blob([fileContent]));
+      saveButtonRef.current.target = '_self';
+      saveButtonRef.current.download = transferState.fileName as string;
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [transferState.status]);
 
   return (
     <div
@@ -103,9 +90,9 @@ const Modal: FC = () => {
             <span className="font-bold">{t('app.modal.to')}: </span>
             <span className="capitalize">{to}</span>
           </div>
-          <div className="mb-2">
+          <div className="mb-2 overflow-hidden">
             <span className="font-bold">{t('app.modal.file-name')}: </span>
-            <span className="capitalize">{transferState.fileName}</span>
+            <span className="overflow-ellipsis">{transferState.fileName}</span>
           </div>
           <div className="mb-4">
             <span className="font-bold">{t('app.modal.file-size')}: </span>
@@ -163,8 +150,17 @@ const Modal: FC = () => {
           )}
           {transferState.status === 'completed' && !transferState.fileContent && (
             <div className="flex justify-center">
-              <Button variant="success" onClick={onSaveFile}>
-                {t('app.modal.save')}
+              <a ref={saveButtonRef}>
+                <Button variant="success" onClick={onCloseModal}>
+                  {t('app.modal.save')}
+                </Button>
+              </a>
+            </div>
+          )}
+          {transferState.status === 'denied' && (
+            <div className="flex justify-center">
+              <Button variant="error" onClick={onCloseModal}>
+                {t('app.modal.denied')}
               </Button>
             </div>
           )}

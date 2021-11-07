@@ -22,6 +22,7 @@
   "app.modal.canceled": "Đã bị huỷ",
   "app.modal.completed": "Đã hoàn thành",
   "app.modal.save": "Lưu",
+  "app.modal.denied": "Bị từ chối",
 
   "app.modal.description-title": "Đây là gì?",
   "app.modal.security-title": "Bảo mật",

@@ -26,7 +26,7 @@ const PeerCom: FC = () => {
         fileSize: string;
         numberOfPaths: number;
       }) => {
-        if (transfer.numberOfPaths) {
+        if (transfer.status) {
           socket?.emit('deny-receive-data', {
             from: data.from,
             to: data.to,
@@ -38,8 +38,7 @@ const PeerCom: FC = () => {
     );
 
     return () => socket?.off(message);
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [dispatch, socket]);
+  }, [dispatch, socket, transfer.status]);
 
   useEffect((): any => {
     const message = 'deny-receive-data';
