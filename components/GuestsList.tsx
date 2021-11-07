@@ -1,7 +1,7 @@
 import { FC } from 'react';
 import { useTranslate } from '../app/hooks/translation';
 import { User as UserModel } from '../models/Room';
-import User from './User';
+import Guest from './Guest';
 
 interface GuestsListProps {
   guests: UserModel[];
@@ -15,7 +15,7 @@ const GuestsList: FC<GuestsListProps> = ({ guests }) => {
       {guests.length > 0 ? (
         <>
           {guests.map((guest) => (
-            <User key={guest.id} name={guest.name} color={guest.color} />
+            <Guest key={guest.id} user={guest} />
           ))}
         </>
       ) : (

@@ -1,3 +1,4 @@
+import classnames from 'classnames';
 import dynamic from 'next/dynamic';
 import { FC } from 'react';
 
@@ -6,9 +7,10 @@ const Animal = dynamic(() => import('react-animals'), { ssr: false });
 interface UserProps {
   name: string;
   color: string;
+  onClick?: () => any;
 }
 
-const User: FC<UserProps> = ({ name, color }) => {
+const User: FC<UserProps> = ({ name, color, onClick }) => {
   return (
     <div
       className="relative w-28 h-32"
@@ -17,7 +19,12 @@ const User: FC<UserProps> = ({ name, color }) => {
       }}
     >
       <div className="w-full flex justify-center">
-        <span className="hover:scale-110 transform duration-200 cursor-pointer">
+        <span
+          className={classnames('', {
+            'hover:scale-110 transform duration-200 cursor-pointer': onClick,
+          })}
+          onClick={onClick}
+        >
           <Animal name={name} color={color} />
         </span>
       </div>
