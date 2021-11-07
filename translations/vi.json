@@ -5,6 +5,8 @@
   "app.header.vi": "Tiếng Việt",
   "app.header.en": "English",
 
+  "app.main.no-peer": "Mở Misadrop trên các thiết bị khác để gửi tệp",
+
   "app.main.error-ip": "Không thể xác định IP của bạn",
   "app.modal.description-title": "Đây là gì?",
   "app.modal.security-title": "Bảo mật",
