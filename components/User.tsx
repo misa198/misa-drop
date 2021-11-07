@@ -16,8 +16,10 @@ const User: FC<UserProps> = ({ name, color }) => {
         animation: 'fadeIn 300ms',
       }}
     >
-      <div className="pointer-events-none w-full flex justify-center">
-        <Animal name={name} color={color} />
+      <div className="w-full flex justify-center">
+        <span className="hover:scale-110 transform duration-200 cursor-pointer">
+          <Animal name={name} color={color} />
+        </span>
       </div>
       <div className="absolute w-full mt-3 flex flex-col justify-center text-center font-bold capitalize text-gray-700 dark:text-white">
         {name}
