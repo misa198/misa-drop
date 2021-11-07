@@ -44,10 +44,10 @@ const Home: NextPage = () => {
   useEffect((): any => {
     const message = 'join-room-successfully';
     socket?.on(message, ({ room }: { room: Room }) => {
-      dispatch(userActions.setGuests(room));
+      dispatch(userActions.setGuests({ room, id: socket.id }));
     });
 
-    return socket?.off(message);
+    return () => socket?.off(message);
   }, [dispatch, socket]);
 
   useEffect((): any => {
@@ -74,7 +74,7 @@ const Home: NextPage = () => {
         <title>Misadrop</title>
       </Head>
       <div className="flex flex-col flex-grow">
-        <GuestsList />
+        <GuestsList guests={user.guests} />
         <Footer />
       </div>
     </>

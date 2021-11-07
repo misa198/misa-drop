@@ -4,6 +4,7 @@ import { getRandomAnimal } from '../../../utils/animals';
 import { fetchIpToken } from '../thunks/user.thunk';
 
 interface UserState {
+  id: string;
   name: string;
   color: string;
   token: string;
@@ -12,6 +13,7 @@ interface UserState {
 }
 
 const initialState: UserState = {
+  id: '',
   name: '',
   color: '',
   token: '',
@@ -28,9 +30,10 @@ const userSlice = createSlice({
       state.name = name;
       state.color = color;
     },
-    setGuests(state, action: PayloadAction<Room>) {
-      const users = action.payload.users;
-      const guests = users.filter((user) => user.id !== state.token);
+    setGuests(state, action: PayloadAction<{ room: Room; id: string }>) {
+      const users = action.payload.room.users;
+      state.id = action.payload.id;
+      const guests = users.filter((user) => user.id !== action.payload.id);
       state.guests = guests;
     },
     addGuest(state, action: PayloadAction<User>) {
