@@ -17,16 +17,6 @@ export const useInitPeer = (): void => {
       setPeer(null);
     }
   }, [user.id]);
-
-  useEffect(() => {
-    if (peer) {
-      peer.on('connection', (conn) => {
-        conn.on('data', (data) => {
-          console.log(data);
-        });
-      });
-    }
-  }, [peer]);
 };
 
 export const usePeer = () => {

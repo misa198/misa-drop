@@ -54,7 +54,6 @@ const PeerCom: FC = () => {
     const message = 'cancel-transferring';
     socket?.on(message, () => {
       if (transfer.status !== 'completed' && transfer.status) {
-        console.log('cancel');
         dispatch(transferActions.setTransferStatus('canceled'));
       }
     });
@@ -82,7 +81,6 @@ const PeerCom: FC = () => {
     socket?.on(message, () => {
       dispatch(transferActions.setTransferStatus('transferring'));
       if (transfer.fileContent) {
-        console.log('transferring');
         const conn = peer?.connect(`${APP_NAME}-${transfer.to}`);
         const _fileContent = transfer.fileContent;
         if (conn) {
@@ -102,7 +100,6 @@ const PeerCom: FC = () => {
       peer?.on('connection', (conn) => {
         conn.on('data', (data: string) => {
           dispatch(transferActions.addNewPath(data));
-          console.log(data);
         });
       });
     }

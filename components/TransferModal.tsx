@@ -50,6 +50,35 @@ const Modal: FC = () => {
     dispatch(transferActions.setTransferStatus('transferring'));
   }
 
+  function onSaveFile() {
+    const fileContent = transferState.paths?.join('') as string;
+    const save = document.createElement('a');
+    save.href = fileContent;
+    save.target = '_blank';
+    save.download = transferState.fileName as string;
+
+    const evt = document.createEvent('MouseEvents');
+    evt.initMouseEvent(
+      'click',
+      true,
+      true,
+      window,
+      1,
+      0,
+      0,
+      0,
+      0,
+      false,
+      false,
+      false,
+      false,
+      0,
+      null,
+    );
+    save.dispatchEvent(evt);
+    (window.URL || window.webkitURL).revokeObjectURL(save.href);
+  }
+
   return (
     <div
       className={classnames(
@@ -88,8 +117,8 @@ const Modal: FC = () => {
               <Line
                 percent={
                   Math.round(
-                    (transferState.paths?.length ?? 0) /
-                      (transferState.numberOfPaths ?? 1),
+                    (transferState.paths?.length || 0) /
+                      (transferState.numberOfPaths || 1),
                   ) * 100
                 }
               />
@@ -134,7 +163,9 @@ const Modal: FC = () => {
           )}
           {transferState.status === 'completed' && !transferState.fileContent && (
             <div className="flex justify-center">
-              <Button variant="success">{t('app.modal.save')}</Button>
+              <Button variant="success" onClick={onSaveFile}>
+                {t('app.modal.save')}
+              </Button>
             </div>
           )}
         </div>
