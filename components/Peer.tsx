@@ -62,16 +62,11 @@ const PeerCom: FC = () => {
 
   // Send file
   function onChunkFile(remainData: string, conn: Peer.DataConnection) {
-    let data: string;
+    const data = remainData.slice(0, CHUNK_LENGTH);
+    conn.send(data);
+    dispatch(transferActions.addNewPath(data));
     if (remainData.length > CHUNK_LENGTH) {
-      data = remainData.slice(0, CHUNK_LENGTH);
-      conn.send(data);
-      dispatch(transferActions.addNewPath(data));
-      onChunkFile(remainData.slice(CHUNK_LENGTH), conn);
-    } else {
-      data = remainData;
-      dispatch(transferActions.addNewPath(data));
-      conn.send(data);
+      setTimeout(() => onChunkFile(remainData.slice(CHUNK_LENGTH), conn), 0);
     }
   }
 
