@@ -1,6 +1,6 @@
 import Peer from 'peerjs';
-import { FC, useEffect } from 'react';
-import { useInitPeer, usePeer } from '../app/hooks/peer';
+import { FC, useContext, useEffect } from 'react';
+import { PeerContext } from '../app/contexts/PeerContext';
 import { useAppDispatch, useAppSelector } from '../app/hooks/redux';
 import { useSocket } from '../app/hooks/socket';
 import { transferActions } from '../app/store/slices/transfer.slice';
@@ -8,12 +8,10 @@ import { APP_NAME } from '../constants/app';
 import { CHUNK_LENGTH } from '../constants/file';
 
 const PeerCom: FC = () => {
-  useInitPeer();
-
   const socket = useSocket();
   const dispatch = useAppDispatch();
   const transfer = useAppSelector((state) => state.transfer);
-  const peer = usePeer();
+  const peer = useContext(PeerContext);
 
   useEffect((): any => {
     const message = 'request-send-data';
