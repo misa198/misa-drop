@@ -28,7 +28,7 @@ const User: FC<UserProps> = ({ name, color, onClick }) => {
           <Animal name={name} color={color} />
         </span>
       </div>
-      <div className="absolute w-full mt-3 flex flex-col justify-center text-center font-bold capitalize text-gray-700 dark:text-white">
+      <div className="absolute w-full mt-3 flex flex-col justify-center text-center font-bold capitalize text-gray-700 dark:text-white select-none">
         {name}
       </div>
     </div>

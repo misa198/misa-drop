@@ -20,7 +20,7 @@ const GuestsList: FC<GuestsListProps> = ({ guests }) => {
         </>
       ) : (
         <h2
-          className="text-xl font-medium"
+          className="text-xl font-medium text-center"
           style={{
             animation: 'fadeIn 300ms',
           }}

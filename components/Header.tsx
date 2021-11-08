@@ -61,7 +61,7 @@ const Header: FC = () => {
       />
       <div className="flex">
         <button
-          className="uppercase text-xl outline-none ml-5 cursor-pointer"
+          className="uppercase text-xl outline-none ml-5 cursor-pointer select-none"
           data-for={`nav-link-${otherLocale}`}
           data-tip
           onClick={onChangeLocale}
