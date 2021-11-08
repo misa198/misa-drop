@@ -15,7 +15,7 @@ const Tooltip = dynamic(() => import('react-tooltip'), {
   ssr: false,
 });
 
-const Modal: FC = () => {
+const InfoModal: FC = () => {
   const { t } = useTranslate();
   const isOpened = useAppSelector((state) => state.layout.isModalOpened);
   const transferState = useAppSelector((state) => state.transfer);
@@ -71,4 +71,4 @@ const Modal: FC = () => {
   );
 };
 
-export default Modal;
+export default InfoModal;

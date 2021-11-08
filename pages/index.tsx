@@ -9,7 +9,6 @@ import { useTranslate } from '../app/hooks/translation';
 import { userActions } from '../app/store/slices/user.slice';
 import { fetchIpToken } from '../app/store/thunks/user.thunk';
 import Footer from '../components/Footer';
-import Modal from '../components/Modal';
 import { Room, User } from '../models/Room';
 
 const GuestsList = dynamic(() => import('../components/GuestsList'), {
@@ -81,7 +80,6 @@ const Home: NextPage = () => {
         <GuestsList guests={user.guests} />
         <Footer />
       </div>
-      <Modal />
       <TransferModal />
     </>
   );

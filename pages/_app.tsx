@@ -9,6 +9,7 @@ import SocketProvider from '../app/contexts/SocketContext';
 import { wrapper } from '../app/store';
 import Background from '../components/Background';
 import Header from '../components/Header';
+import InfoModal from '../components/InfoModal';
 import '../styles/global.css';
 
 const PeerProvider = dynamic(() => import('../app/contexts/PeerContext'), {
@@ -25,10 +26,11 @@ const MyApp: FC<AppProps> = ({ Component, pageProps }) => {
         <Header />
         <SocketProvider>
           <PeerProvider>
-            <Peer />
             <div className="w-full flex-grow flex">
               <Component {...pageProps} />
             </div>
+            <Peer />
+            <InfoModal />
           </PeerProvider>
         </SocketProvider>
       </div>
