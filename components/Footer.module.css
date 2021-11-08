@@ -1,0 +1,15 @@
+.footer {
+  height: 110px;
+}
+
+@media (min-height: 382px) {
+  .footer {
+    height: 132px;
+  }
+}
+
+@media (min-height: 800px) {
+  .footer {
+    height: 149px;
+  }
+}
