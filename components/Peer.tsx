@@ -1,14 +1,14 @@
 import Peer from 'peerjs';
 import { FC, useContext, useEffect } from 'react';
 import { PeerContext } from '../app/contexts/PeerContext';
+import { SocketContext } from '../app/contexts/SocketContext';
 import { useAppDispatch, useAppSelector } from '../app/hooks/redux';
-import { useSocket } from '../app/hooks/socket';
 import { transferActions } from '../app/store/slices/transfer.slice';
 import { APP_NAME } from '../constants/app';
 import { CHUNK_LENGTH } from '../constants/file';
 
 const PeerCom: FC = () => {
-  const socket = useSocket();
+  const socket = useContext(SocketContext);
   const dispatch = useAppDispatch();
   const transfer = useAppSelector((state) => state.transfer);
   const peer = useContext(PeerContext);

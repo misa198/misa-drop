@@ -1,8 +1,8 @@
 import prettyBytes from 'pretty-bytes';
-import { FC, useRef } from 'react';
+import { FC, useContext, useRef } from 'react';
 import { toast } from 'react-toastify';
+import { SocketContext } from '../app/contexts/SocketContext';
 import { useAppDispatch } from '../app/hooks/redux';
-import { useSocket } from '../app/hooks/socket';
 import { useTranslate } from '../app/hooks/translation';
 import { transferActions } from '../app/store/slices/transfer.slice';
 import { CHUNK_LENGTH } from '../constants/file';
@@ -17,7 +17,7 @@ const Guest: FC<GuestProps> = ({ user }) => {
   const { name, color, id } = user;
   const inputFileRef = useRef<HTMLInputElement>(null);
   const { t } = useTranslate();
-  const socket = useSocket();
+  const socket = useContext(SocketContext);
   const dispatch = useAppDispatch();
 
   function onClickGuest() {

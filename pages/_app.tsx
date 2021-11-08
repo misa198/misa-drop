@@ -5,7 +5,7 @@ import { FC } from 'react';
 import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import 'tailwindcss/tailwind.css';
-import { useInitSocket } from '../app/hooks/socket';
+import SocketProvider from '../app/contexts/SocketContext';
 import { wrapper } from '../app/store';
 import Background from '../components/Background';
 import Header from '../components/Header';
@@ -18,19 +18,19 @@ const Peer = dynamic(() => import('../components/Peer'), { ssr: false });
 const Theme = dynamic(() => import('../components/Theme'), { ssr: false });
 
 const MyApp: FC<AppProps> = ({ Component, pageProps }) => {
-  useInitSocket();
-
   return (
     <ThemeProvider attribute="class">
       <Theme />
       <div className="flex flex-col w-full min-h-screen">
         <Header />
-        <PeerProvider>
-          <Peer />
-          <div className="w-full flex-grow flex">
-            <Component {...pageProps} />
-          </div>
-        </PeerProvider>
+        <SocketProvider>
+          <PeerProvider>
+            <Peer />
+            <div className="w-full flex-grow flex">
+              <Component {...pageProps} />
+            </div>
+          </PeerProvider>
+        </SocketProvider>
       </div>
       <Background />
       <ToastContainer

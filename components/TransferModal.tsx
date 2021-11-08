@@ -1,9 +1,9 @@
 import classnames from 'classnames';
 import { Line } from 'rc-progress';
-import { FC, useEffect, useMemo } from 'react';
+import { FC, useContext, useEffect, useMemo } from 'react';
 import { X } from 'react-feather';
+import { SocketContext } from '../app/contexts/SocketContext';
 import { useAppDispatch, useAppSelector } from '../app/hooks/redux';
-import { useSocket } from '../app/hooks/socket';
 import { useTranslate } from '../app/hooks/translation';
 import { transferActions } from '../app/store/slices/transfer.slice';
 import Button from './Button';
@@ -13,7 +13,7 @@ const Modal: FC = () => {
   const transferState = useAppSelector((state) => state.transfer);
   const user = useAppSelector((state) => state.user);
   const dispatch = useAppDispatch();
-  const socket = useSocket();
+  const socket = useContext(SocketContext);
 
   const from = useMemo(() => {
     if (transferState.fileContent) {

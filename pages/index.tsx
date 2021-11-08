@@ -1,10 +1,10 @@
 import { NextPage } from 'next';
 import dynamic from 'next/dynamic';
 import Head from 'next/head';
-import { useEffect } from 'react';
+import { useContext, useEffect } from 'react';
 import { toast } from 'react-toastify';
+import { SocketContext } from '../app/contexts/SocketContext';
 import { useAppDispatch, useAppSelector } from '../app/hooks/redux';
-import { useSocket } from '../app/hooks/socket';
 import { useTranslate } from '../app/hooks/translation';
 import { userActions } from '../app/store/slices/user.slice';
 import { fetchIpToken } from '../app/store/thunks/user.thunk';
@@ -23,7 +23,7 @@ const Home: NextPage = () => {
   const dispatch = useAppDispatch();
   const user = useAppSelector((state) => state.user);
   const { t } = useTranslate();
-  const socket = useSocket();
+  const socket = useContext(SocketContext);
 
   useEffect(() => {
     dispatch(userActions.setUser());
