@@ -1,7 +1,7 @@
 import { useTheme } from 'next-themes';
-import { FC, useEffect } from 'react';
+import { useEffect } from 'react';
 
-const Theme: FC = () => {
+export const useAppTheme = () => {
   const { theme, setTheme } = useTheme();
 
   useEffect(() => {
@@ -19,8 +19,4 @@ const Theme: FC = () => {
   useEffect(() => {
     localStorage.setItem('darkMode', theme === 'dark' ? 'true' : 'false');
   }, [theme]);
-
-  return null;
 };
-
-export default Theme;

@@ -6,8 +6,8 @@ import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import 'tailwindcss/tailwind.css';
 import SocketProvider from '../app/contexts/SocketContext';
+import { useBackground } from '../app/hooks/background';
 import { wrapper } from '../app/store';
-import Background from '../components/Background';
 import Header from '../components/Header';
 import InfoModal from '../components/InfoModal';
 import '../styles/global.css';
@@ -15,26 +15,27 @@ import '../styles/global.css';
 const PeerProvider = dynamic(() => import('../app/contexts/PeerContext'), {
   ssr: false,
 });
-const Peer = dynamic(() => import('../components/Peer'), { ssr: false });
-const Theme = dynamic(() => import('../components/Theme'), { ssr: false });
+const NoSSR = dynamic(() => import('../components/NoSSR'), {
+  ssr: false,
+});
 
 const MyApp: FC<AppProps> = ({ Component, pageProps }) => {
+  useBackground();
+
   return (
     <ThemeProvider attribute="class">
-      <Theme />
       <div className="flex flex-col w-full min-h-screen">
         <Header />
         <SocketProvider>
           <PeerProvider>
+            <NoSSR />
             <div className="w-full flex-grow flex">
               <Component {...pageProps} />
             </div>
-            <Peer />
             <InfoModal />
           </PeerProvider>
         </SocketProvider>
       </div>
-      <Background />
       <ToastContainer
         position="top-center"
         limit={1}

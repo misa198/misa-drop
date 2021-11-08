@@ -1,6 +1,6 @@
-import { FC, useEffect } from 'react';
+import { useEffect } from 'react';
 
-const Background: FC = () => {
+export const useBackground = () => {
   useEffect(() => {
     const canvas = document.createElement('canvas');
     document.body.appendChild(canvas);
@@ -63,8 +63,4 @@ const Background: FC = () => {
     init();
     animate();
   }, []);
-
-  return null;
 };
-
-export default Background;
