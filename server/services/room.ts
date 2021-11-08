@@ -1,69 +1,35 @@
-import { Room, User } from '../../models/Room';
-import { db } from './nedb';
+import { User } from '../../models/Room';
+import { Room as RoomCollection } from './memDb';
 
-export const findRoom = (ip: string): Promise<Room> => {
-  return new Promise((resolve, reject) => {
-    db.findOne({ ip }, (err, room) => {
-      if (err) {
-        reject(err);
-      } else {
-        resolve(room);
-      }
-    });
-  });
+export const findRoom = (ip: string) => {
+  const room = RoomCollection.findOne({ ip });
+  return room;
 };
 
-export const addUserToRoom = async (ip: string, user: User) => {
-  const foundRoom = await findRoom(ip);
+export const addUserToRoom = (ip: string, user: User) => {
+  const foundRoom = findRoom(ip);
   if (foundRoom) {
-    return new Promise((resolve, reject) => {
-      db.update({ ip }, { $push: { users: user } }, {}, (err, numReplaced) => {
-        if (err) {
-          reject(err);
-        } else {
-          resolve(numReplaced);
-        }
-      });
-    });
+    foundRoom.users.push(user);
+    RoomCollection.update(foundRoom);
   } else {
-    return new Promise((resolve, reject) => {
-      db.insert({ ip, users: [user] }, (err, newRoom) => {
-        if (err) {
-          reject(err);
-        } else {
-          resolve(newRoom);
-        }
-      });
-    });
+    const newRoom = {
+      ip,
+      users: [user],
+    };
+    RoomCollection.insert(newRoom);
   }
 };
 
-export const removeUserFromRoom = async (ip: string, id: string) => {
-  const foundRoom = await findRoom(ip);
+export const removeUserFromRoom = (ip: string, id: string) => {
+  const foundRoom = findRoom(ip);
   if (!foundRoom) {
     throw new Error('Room not found');
   }
-  const room = foundRoom as Room;
 
-  if (room.users.length === 1) {
-    return new Promise((resolve, reject) => {
-      db.remove({ ip }, {}, (err, numRemoved) => {
-        if (err) {
-          reject(err);
-        } else {
-          resolve(numRemoved);
-        }
-      });
-    });
+  if (foundRoom.users.length === 1) {
+    RoomCollection.remove(foundRoom);
+  } else {
+    foundRoom.users = foundRoom.users.filter((user) => user.id !== id);
+    RoomCollection.update(foundRoom);
   }
-
-  return new Promise((resolve, reject) => {
-    db.update({ ip }, { $pull: { users: { id } } }, {}, (err, numReplaced) => {
-      if (err) {
-        reject(err);
-      } else {
-        resolve(numReplaced);
-      }
-    });
-  });
 };

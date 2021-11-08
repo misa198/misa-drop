@@ -8,15 +8,15 @@ export const io = new socketIO.Server();
 io.attach(httpServer);
 
 io.on('connection', (socket: Socket) => {
-  socket.on('join-room', async (user: User) => {
+  socket.on('join-room', (user: User) => {
     try {
       const authUser = authSocket(socket);
       if (!authUser) return socket.emit('error', 'Unauthorized');
-      await roomService.addUserToRoom(authUser.ip, {
+      roomService.addUserToRoom(authUser.ip, {
         ...user,
         id: authUser.id,
       });
-      const room = await roomService.findRoom(authUser.ip);
+      const room = roomService.findRoom(authUser.ip);
       socket.join(authUser.ip);
       socket.emit('join-room-successfully', { room });
       socket.to(authUser.ip).emit('new-user-joined', {
@@ -31,7 +31,7 @@ io.on('connection', (socket: Socket) => {
     }
   });
 
-  socket.on('request-send-data', async (payload: any) => {
+  socket.on('request-send-data', (payload: any) => {
     try {
       const authUser = authSocket(socket);
       if (!authUser) return socket.emit('error', 'Unauthorized');
@@ -41,52 +41,43 @@ io.on('connection', (socket: Socket) => {
     }
   });
 
-  socket.on(
-    'deny-receive-data',
-    async (payload: { from: string; to: string }) => {
-      try {
-        const authUser = authSocket(socket);
-        if (!authUser) return socket.emit('error', 'Unauthorized');
-        socket.to(payload.from).emit('deny-receive-data');
-      } catch (e) {
-        socket.emit('error', e);
-      }
-    },
-  );
-
-  socket.on(
-    'cancel-transferring',
-    async (payload: { from: string; to: string }) => {
-      try {
-        const authUser = authSocket(socket);
-        if (!authUser) return socket.emit('error', 'Unauthorized');
-        socket
-          .to(socket.id === payload.to ? payload.from : payload.to)
-          .emit('cancel-transferring');
-      } catch (e) {
-        socket.emit('error', e);
-      }
-    },
-  );
-
-  socket.on(
-    'accept-transfer',
-    async (payload: { from: string; to: string }) => {
-      try {
-        const authUser = authSocket(socket);
-        if (!authUser) return socket.emit('error', 'Unauthorized');
-        socket.to(payload.from).emit('accept-transfer');
-      } catch (e) {
-        socket.emit('error', e);
-      }
-    },
-  );
-
-  socket.on('disconnect', async () => {
+  socket.on('deny-receive-data', (payload: { from: string; to: string }) => {
     try {
       const authUser = authSocket(socket);
       if (!authUser) return socket.emit('error', 'Unauthorized');
-      await roomService.removeUserFromRoom(authUser.ip, socket.id);
+      socket.to(payload.from).emit('deny-receive-data');
+    } catch (e) {
+      socket.emit('error', e);
+    }
+  });
+
+  socket.on('cancel-transferring', (payload: { from: string; to: string }) => {
+    try {
+      const authUser = authSocket(socket);
+      if (!authUser) return socket.emit('error', 'Unauthorized');
+      socket
+        .to(socket.id === payload.to ? payload.from : payload.to)
+        .emit('cancel-transferring');
+    } catch (e) {
+      socket.emit('error', e);
+    }
+  });
+
+  socket.on('accept-transfer', (payload: { from: string; to: string }) => {
+    try {
+      const authUser = authSocket(socket);
+      if (!authUser) return socket.emit('error', 'Unauthorized');
+      socket.to(payload.from).emit('accept-transfer');
+    } catch (e) {
+      socket.emit('error', e);
+    }
+  });
+
+  socket.on('disconnect', () => {
+    try {
+      const authUser = authSocket(socket);
+      if (!authUser) return socket.emit('error', 'Unauthorized');
+      roomService.removeUserFromRoom(authUser.ip, socket.id);
       socket.to(authUser.ip).emit('user-left', {
         id: socket.id,
       });

@@ -5,7 +5,7 @@ import next from 'next';
 import requestIp from 'request-ip';
 import { IS_DEV, PORT } from './configs/app';
 import rootRoute from './routes';
-require('./services/nedb');
+require('./services/memDb');
 
 const app = next({ dev: IS_DEV });
 const handler = app.getRequestHandler();
