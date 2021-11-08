@@ -1,5 +1,13 @@
 {
   "name": "misadrop",
+  "version": "1.0.0",
+  "description": "Misadrop is a free web app that allows you to easily and securely share files directly between devices without uploading them to any server first.",
+  "author": "Thanh Vu <misa198>",
+  "homepage": "https://github.com/misa198/misadrop#readme",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/misa198/misadrop.git"
+  },
   "private": true,
   "license": "MIT",
   "scripts": {
